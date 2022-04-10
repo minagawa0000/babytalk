@@ -8,24 +8,18 @@ use Illuminate\Support\Facades\Storage;
 
 class CommentController extends Controller
 {
-    public function store(Request $request) {
-
-        $inputs=request()->validate([
-            'body'=>'required|max:255',
+    public function store(Request $request)
+    {
+        $inputs = request()->validate([
+            'body' => 'required|max:255',
         ]);
 
-        $comment=Comment::create([
-            'body'=>$inputs['body'],
-            'user_id'=>auth()->user()->id,
-            'post_id'=>$request->post_id
+        $comment = Comment::create([
+            'body' => $inputs['body'],
+            'user_id' => auth()->user()->id,
+            'post_id' => $request->post_id
         ]);
 
         return back();
     }
-
-
-
-
-
-
 }

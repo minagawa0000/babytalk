@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // return view('welcome');
-    return view('auth.login');
+  // return view('welcome');
+  return view('auth.login');
 })->middleware('guest');
 
 Auth::routes(['verify' => true]);
 
-Route::middleware(['verified'])->group(function(){
+Route::middleware(['verified'])->group(function () {
   Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
   Route::post('/post/comment/store', 'CommentController@store')->name('comment.store');
   Route::get('/mypost', 'HomeController@mypost')->name('home.mypost');
@@ -29,13 +29,11 @@ Route::middleware(['verified'])->group(function(){
   Route::get('/profile/{user}/edit', 'ProfileController@edit')->name('profile.edit');
   Route::put('/profile/{user}', 'ProfileController@update')->name('profile.update');
 
-
-// 管理者用画面
-Route::middleware(['can:admin'])->group(function() {
+  // 管理者用画面
+  Route::middleware(['can:admin'])->group(function () {
     Route::get('/profile/index', 'ProfileController@index')->name('profile.index');
     Route::delete('/profile/{user}', 'ProfileController@delete')->name('profile.delete');
-  });  
-  
+  });
 });
 
-Route::resource('/post','PostController');
+Route::resource('/post', 'PostController');
